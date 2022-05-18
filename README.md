@@ -1028,7 +1028,15 @@ CONNECT BY LEVEL <= REGEXP_COUNT(STR, ',') + 1;
 
 
 ------------------------------------------------------------
-# session 13. Performance Tuning and tips
+# session 14. FullTextSearch
+
+create index IDX_COL1 on TBL1 ( COL1 )  indextype is ctxsys.context PARAMETERS ('SYNC ( ON COMMIT)');
+
+select * from TBL1 where contains ( COL1 ,'%YourSearchString%')>0 order by 1;
+
+
+------------------------------------------------------------
+# session 14. Performance Tuning and tips
 
 ###  1. instead of checking conditions with several and:(x,y,z) in (a,b,c)
 ###  2. number of join conditions are always : n-1
