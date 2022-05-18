@@ -1013,10 +1013,22 @@ from (
 where rn > 0;
 
 
+------------------------------------------------------------
+# session 12. CommaSeparated
+
+WITH Q_STR AS
+(Select NGNQ_L4FNDRSLTPRSRCHVL('channelStrategies', to_char(d.l4220content)) STR
+from lc4lfstrgdata d
+where d.l4220agrstrtgtp = 11
+and d.l4204loanfileid = '0124.700.21945506.1')
+SELECT REGEXP_SUBSTR(STR, '[^,]+', 1, LEVEL) COL1
+FROM Q_STR
+CONNECT BY LEVEL <= REGEXP_COUNT(STR, ',') + 1;
+
 
 
 ------------------------------------------------------------
-# session 12. Performance Tuning and tips
+# session 13. Performance Tuning and tips
 
 ###  1. instead of checking conditions with several and:(x,y,z) in (a,b,c)
 ###  2. number of join conditions are always : n-1
@@ -1117,4 +1129,5 @@ from  TBL_PERSONS per2,
 where  rn <=100
 and per2.per_id = tbl2.per_id
 order by rn;
+
 
